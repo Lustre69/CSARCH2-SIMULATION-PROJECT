@@ -15,7 +15,7 @@
         label {
             margin-right: 10px;
         }
-        #output {
+        #output, #log {
             margin-top: 20px;
             padding: 10px;
             border: 1px solid #ddd;
@@ -37,8 +37,16 @@
         <label for="cacheBlocks">Number of Cache Blocks:</label>
         <input type="number" id="cacheBlocks" value="32">
     </div>
+    <div class="container">
+        <label for="traceType">Trace Type:</label>
+        <select id="traceType">
+            <option value="stepByStep">Step-by-Step</option>
+            <option value="finalSnapshot">Final Snapshot</option>
+        </select>
+    </div>
     <button onclick="runSimulation()">Run Simulation</button>
     <div id="output"></div>
+    <div id="log"></div>
 
     <script src="cacheSimulator.js"></script>
 </body>
