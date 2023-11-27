@@ -1,8 +1,11 @@
 class CacheSimulator {
-    constructor(cacheBlocks = 32, cacheLineSize = 16) {
+    constructor(cacheBlocks = 32, cacheLineSize = 16, ways = 8) {
         this.cacheBlocks = cacheBlocks;
         this.cacheLineSize = cacheLineSize;
-        this.cache = new Array(cacheBlocks).fill(-1);
+        this.ways = ways;
+        this.sets = cacheBlocks / ways;
+        this.cache = new Array(this.sets).fill(null).map(() => new Array(this.ways).fill(null));
+        this.mru = new Array(this.sets).fill(null).map(() => new Array(this.ways).fill(-1));
         this.memoryAccessCount = 0;
         this.cacheHitCount = 0;
         this.cacheMissCount = 0;
@@ -10,18 +13,39 @@ class CacheSimulator {
 
     accessMemory(blockAddress) {
         this.memoryAccessCount++;
-        const blockIndex = blockAddress % this.cacheBlocks;
-        if (this.cache[blockIndex] === blockAddress) {
+        const setIndex = blockAddress % this.sets;
+        const wayIndex = this.findWayIndex(setIndex, blockAddress);
+        
+        if (wayIndex !== -1) {
+            // Cache hit
             this.cacheHitCount++;
+            this.updateMRU(setIndex, wayIndex);
         } else {
+            // Cache miss
             this.cacheMissCount++;
-            this.cache[blockIndex] = blockAddress;
+            this.addToCache(setIndex, blockAddress);
         }
+    }
+
+    findWayIndex(setIndex, blockAddress) {
+        return this.cache[setIndex].findIndex(block => block === blockAddress);
+    }
+
+    updateMRU(setIndex, wayIndex) {
+        this.mru[setIndex][wayIndex] = this.memoryAccessCount;
+        // Update MRU order for the set
+        this.mru[setIndex].sort((a, b) => b - a);
+    }
+
+    addToCache(setIndex, blockAddress) {
+        const leastRecentlyUsedIndex = this.mru[setIndex].lastIndexOf(Math.min(...this.mru[setIndex]));
+        this.cache[setIndex][leastRecentlyUsedIndex] = blockAddress;
+        this.updateMRU(setIndex, leastRecentlyUsedIndex);
     }
 
     runTest(testType, n) {
         if (testType === 'sequential') {
-            for (let i = 0; i < 4; i++) { // Repeat sequence four times
+            for (let i = 0; i < 4; i++) {
                 for (let blockAddress = 0; blockAddress < 2 * n; blockAddress++) {
                     this.accessMemory(blockAddress);
                 }
@@ -40,8 +64,7 @@ class CacheSimulator {
             for (let i = n; i < 2 * n; i++) {
                 sequence.push(i);
             }
-
-            for (let i = 0; i < 4; i++) { // Repeat full sequence four times
+            for (let i = 0; i < 4; i++) {
                 sequence.forEach(blockAddress => {
                     this.accessMemory(blockAddress);
                 });
@@ -81,4 +104,3 @@ function displayResults(stats) {
         <p>Cache Miss Rate: ${stats.cacheMissRate.toFixed(2)}</p>
     `;
 }
-``
