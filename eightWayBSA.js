@@ -77,10 +77,16 @@ class eightWayBSA{
                 this.cacheMiss++;
             }
             else{
-                for(let j = 0; j < cache[loc].length; j++){
-                    cache[loc][j].mru = false;
+                if(mruVal.includes(null) == true){
+                    cache[loc][mruVal.indexOf(true)] = new CacheBlock(true, sequence[i]);
                 }
-                cache[loc][mruVal.indexOf(true)] = new CacheBlock(true, sequence[i]);
+                else{
+                    for(let j = 0; j < cache[loc].length; j++){
+                        cache[loc][j].mru = false;
+                    }
+                    cache[loc][mruVal.indexOf(true)] = new CacheBlock(true, sequence[i]);
+                }
+                
                 hit = "hit";
                 this.cacheHit++;
             }
