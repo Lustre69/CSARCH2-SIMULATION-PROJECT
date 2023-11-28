@@ -60,8 +60,8 @@ class eightWayBSA{
             for(let j = 0; j < cache[loc].length; j++){
                 mruVal.push(cache[loc][j].mru);
             }
-            console.log(blocksVal);
-            console.log(mruVal);
+            // console.log(blocksVal);
+            // console.log(mruVal);
             
             if(blocksVal.includes(sequence[i]) == false){
                 if(mruVal.includes(null) == true){
