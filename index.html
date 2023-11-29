@@ -6,20 +6,66 @@
     <style>
         /* Add your CSS styling here */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            margin: 0;
+            padding: 15px 20px;
+            text-align: center;
         }
         .container {
-            margin-bottom: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         label {
-            margin-right: 10px;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
         }
         #output, #log, #statistics {
-            margin-top: 20px;
             padding: 10px;
             border: 1px solid #ddd;
-            background-color: #f9f9f9;
+            border-radius: 4px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+        #output {
+            min-height: 50px;
+        }
+        #log {
+            min-height: 100px;
+        }
+        #statistics {
+            min-height: 50px;
         }
     </style>
 </head>
