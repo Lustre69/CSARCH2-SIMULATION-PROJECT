@@ -55,15 +55,11 @@ class eightWayBSA{
     simulate(testType, cacheBlocks){
         let sequence = this.generateSequence(testType, cacheBlocks);
         let cache = this.initializeCache();
-        console.log(cache);
         for(let i = 0; i < sequence.length; i++){
-            //console.log(cache);
             this.memoryAccess++;
             let loc = sequence[i] % this.sets;
             let blocksVal = [];
             let mruVal = [];
-            console.log(blocksVal);
-            console.log(mruVal);
             let hit = "";
             for(let j = 0; j < cache[loc].length; j++){
                 blocksVal.push(cache[loc][j].value);
@@ -151,7 +147,6 @@ function runSimulation() {
 
     let bsa = new eightWayBSA();
     bsa.simulate(testType, cacheBlocks);
-    console.log(traceType);
     if(traceType == "stepByStep"){
         bsa.displayLogs();
     }
