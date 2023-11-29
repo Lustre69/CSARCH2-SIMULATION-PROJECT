@@ -16,3 +16,6 @@ Since the sequence are random, there are cases where the cache is not filled up,
 This test case has a sequence of numbers repeating twice while the 2nd iteration is extended by 2 times. For this certain case, the number of cache hits would be around 1/3 of the sequence since the first sequence will all be misses while the second sequence which is the the duplicate will all have cache hits while the extension of the second sequence will then all have cache misses.
 ![image](https://github.com/Lustre69/CSARCH2-SIMULATION-PROJECT/assets/80824378/0cac8a7f-6d7a-4717-be7a-c5d7278acd26)
 
+## Accessing the Program
+1. Download the repository from github
+2. Copy your local file path of the .html file to the browser ![image](https://github.com/Lustre69/CSARCH2-SIMULATION-PROJECT/assets/80824378/4c4f98a2-5ba8-4e20-ba58-5bc1ce36ad9e)
