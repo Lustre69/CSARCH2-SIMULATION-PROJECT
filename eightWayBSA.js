@@ -15,6 +15,7 @@ class eightWayBSA{
         this.cacheMiss = 0;
         this.memoryAccess = 0;
         this.logs = [];
+        this.cache = null;
     }
 
     initializeCache() {
@@ -94,6 +95,17 @@ class eightWayBSA{
             let log = "Access: " + sequence[i] + " (" + hit + ")";
             this.logs.push(log);
         }
+        this.cache = cache;
+    }
+
+    displayFinalSnapshot(){
+        //console.log(this.cache);
+        const tableContainer = document.getElementById("output");
+        const label = document.createElement("h3");
+        label.innerText = "Row: Set, Column: Block";
+        tableContainer.appendChild(label);
+        const table = createTableFromArray(this.cache);
+        tableContainer.appendChild(table);
     }
 
     displayLogs() {
@@ -107,24 +119,60 @@ class eightWayBSA{
         const statsDiv = document.getElementById('statistics');
         const hitRate = (this.cacheHit / this.memoryAccess) * 100;
         const missRate = (this.cacheMiss / this.memoryAccess) * 100;
+
+        const memoryAccessTime = 10;
+        const cacheAccesTime = 1;
+        const missPenalty = 42
+
+        let avgAccessTime = ((hitRate/100) * cacheAccesTime) + ((missRate/100) * missPenalty);
+        let totalAccessTime = this.cacheHit * this.cacheBlocks * cacheAccesTime + this.cacheMiss * (cacheAccesTime + this.cacheBlocks * memoryAccessTime);
+
         statsDiv.innerHTML = `
             <p>Memory Access Count: ${this.memoryAccess}</p>
             <p>Cache Hit Count: ${this.cacheHit}</p>
             <p>Cache Miss Count: ${this.cacheMiss}</p>
             <p>Cache Hit Rate: ${hitRate.toFixed(2)}%</p>
-            <p>Cache Miss Rate: ${missRate.toFixed(2)}%</p>`;
+            <p>Cache Miss Rate: ${missRate.toFixed(2)}%</p>
+            <p>Average Access Time: ${avgAccessTime.toFixed(2)} ns (Assuming 42ns no LT miss penalty)
+            <p>Total Access Time: ${totalAccessTime.toFixed(2)} ns`;
     }
 }
 
 function runSimulation() {
     // Function to start the simulation based on user input
+    let tableContainer = document.getElementById("output");
+    let logDiv = document.getElementById('log');
+    tableContainer.innerHTML = "";
+    logDiv.innerHTML = "";
     const testType = document.getElementById("testType").value;
     const cacheBlocks = parseInt(document.getElementById("cacheBlocks").value);
     const traceType = document.getElementById("traceType").value;
 
     let bsa = new eightWayBSA();
     bsa.simulate(testType, cacheBlocks);
-    bsa.displayLogs();
+    console.log(traceType);
+    if(traceType == "stepByStep"){
+        bsa.displayLogs();
+    }
+    if(traceType == "finalSnapshot"){
+        bsa.displayFinalSnapshot();
+    }
     bsa.displayStatistics();
 }
 
+function createTableFromArray(array) {
+    const table = document.createElement('table');
+    array.forEach(rowData => {
+        const row = document.createElement('tr');
+
+        rowData.forEach(cellData => {
+            const cell = document.createElement('td');
+            cell.textContent = cellData.value;
+            row.appendChild(cell);
+        });
+
+        table.appendChild(row);
+    });
+
+    return table;
+}
