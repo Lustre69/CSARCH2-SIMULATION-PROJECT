@@ -103,12 +103,16 @@ class CacheSimulator {
     displayCurrentState(step) {
         // Update the HTML with the current state of the cache
         const outputDiv = document.getElementById('output');
-        let outputHtml = `<h3>Step ${step}</h3>`;
-        this.cache.forEach((set, setIndex) => {
-            outputHtml += `<div>Set ${setIndex}: [${set.join(', ')}]</div>`;
-        });
+        let outputHtml = '';
+        if (step === 1 || step === this.sequence.length) { // Check for first or final step
+            outputHtml += `<h3>${step === 1 ? 'Initial State' : 'Final Snapshot'}</h3>`;
+            this.cache.forEach((set, setIndex) => {
+                outputHtml += `<div>Set ${setIndex}: [${set.join(', ')}]</div>`;
+            });
+        }
         outputDiv.innerHTML = outputHtml;
     }
+    
 
     displayLogs() {
         // Display the logs of cache accesses
