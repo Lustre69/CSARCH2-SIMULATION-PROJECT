@@ -47,7 +47,6 @@ class eightWayBSA{
 
     simulate(testType, cacheBlocks){
         let sequence = this.generateSequence(testType, cacheBlocks);
-        //let sequence = [1, 1];
         let cache = this.initializeCache();
         for(let i = 0; i < sequence.length; i++){
             this.memoryAccess++;
@@ -61,8 +60,6 @@ class eightWayBSA{
             for(let j = 0; j < cache[loc].length; j++){
                 mruVal.push(cache[loc][j].mru);
             }
-            // console.log(blocksVal);
-            // console.log(mruVal);
             
             if(blocksVal.includes(sequence[i]) == false){
                 if(mruVal.includes(null) == true){
@@ -93,7 +90,6 @@ class eightWayBSA{
     }
 
     displayFinalSnapshot(){
-        //console.log(this.cache);
         const tableContainer = document.getElementById("output");
         const label = document.createElement("h3");
         label.innerText = "Row: Set, Column: Block";
