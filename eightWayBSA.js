@@ -15,7 +15,7 @@ class eightWayBSA{
         this.cacheMiss = 0;
         this.memoryAccess = 0;
         this.logs = [];
-        this.cache = null;
+        this.cache;
     }
 
     initializeCache() {
@@ -85,11 +85,10 @@ class eightWayBSA{
                 for(let j = 0; j < cache[loc].length; j++){
                     cache[loc][j].mru = false;
                 }
-                cache[loc][mruVal.indexOf(true)] = new CacheBlock(true, sequence[i]);
+                cache[loc][mruVal.indexOf(true)].mru = true;
                 hit = "hit";
                 this.cacheHit++;
             }
-            
             let log = "Access: " + sequence[i] + " (" + hit + ")";
             this.logs.push(log);
         }
