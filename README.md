@@ -1,4 +1,4 @@
-# CSARCH2-SIMULATION-PROJECT
+# CSARCH2-SIMULATION-PROJECT Made by Paolo Flores; Marco Lustre; Ralph Maqrquez
 ## Test Case 1: Sequential
 The first test case is a sequence of numbers up to n(number of memory blocks) repeated 2 times.
 The first half of the sequence are all cache misses since they are all unique numbers from 0 to n while the second half are all cache hits since they are now all present in the cache memory. Furthermore, the expected output would have half of the sequence having a cache miss and the other half having cache hits.
@@ -19,3 +19,8 @@ This test case has a sequence of numbers repeating twice while the 2nd iteration
 ## Accessing the Program
 1. Download the repository from github
 2. Copy your local file path of the .html file to the browser ![image](https://github.com/Lustre69/CSARCH2-SIMULATION-PROJECT/assets/80824378/4c4f98a2-5ba8-4e20-ba58-5bc1ce36ad9e)
+
+
+
+## Walkthrough Video
+https://youtu.be/tXhvLzurkjo
